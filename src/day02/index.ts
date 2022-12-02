@@ -18,54 +18,6 @@ const actionDict = {
   Z: Actions.Scissors,
 };
 
-function getRound2Action(
-  playerAAction: Actions,
-  playerB: PlayerBValue,
-): Actions {
-  console.log({ playerAAction, playerB });
-  switch (playerAAction) {
-    case Actions.Rock:
-      switch (playerB) {
-        // lose
-        case "X":
-          return Actions.Scissors;
-        // tie
-        case "Y":
-          return Actions.Rock;
-        // win
-        case "Z":
-          return Actions.Paper;
-      }
-    case Actions.Paper:
-      switch (playerB) {
-        // lose
-        case "X":
-          return Actions.Rock;
-        // tie
-        case "Y":
-          return Actions.Paper;
-        // win
-        case "Z":
-          return Actions.Scissors;
-      }
-    case Actions.Scissors:
-      switch (playerB) {
-        // lose
-        case "X":
-          return Actions.Paper;
-        // tie
-        case "Y":
-          return Actions.Scissors;
-        // win
-        case "Z":
-          return Actions.Rock;
-      }
-
-    default:
-      throw new Error("Invalid action");
-  }
-}
-
 function roundResult(playerAAction: Actions, playerBAction: Actions): number {
   if (playerAAction === playerBAction) {
     return 3;
@@ -103,6 +55,53 @@ function roundScore(playerAAction: Actions, playerBAction: Actions): number {
   return roundResult(playerAAction, playerBAction) + playerBAction;
 }
 
+function getRound2Action(
+  playerAAction: Actions,
+  playerB: PlayerBValue,
+): Actions {
+  switch (playerAAction) {
+    case Actions.Rock:
+      switch (playerB) {
+        // lose
+        case "X":
+          return Actions.Scissors;
+        // tie
+        case "Y":
+          return Actions.Rock;
+        // win
+        case "Z":
+          return Actions.Paper;
+      }
+    case Actions.Paper:
+      switch (playerB) {
+        // lose
+        case "X":
+          return Actions.Rock;
+        // tie
+        case "Y":
+          return Actions.Paper;
+        // win
+        case "Z":
+          return Actions.Scissors;
+      }
+    case Actions.Scissors:
+      switch (playerB) {
+        // lose
+        case "X":
+          return Actions.Paper;
+        // tie
+        case "Y":
+          return Actions.Scissors;
+        // win
+        case "Z":
+          return Actions.Rock;
+      }
+
+    default:
+      throw new Error("Invalid action");
+  }
+}
+
 const parseInput = (rawInput: string) => rawInput.split("\n");
 
 const part1 = (rawInput: string) => {
@@ -121,12 +120,7 @@ const part2 = (rawInput: string) => {
     const [playerA, playerB] = round.split(" ") as [PlayerAValue, PlayerBValue];
     const playerAAction = actionDict[playerA];
     const playerBAction = getRound2Action(playerAAction, playerB);
-    console.log({
-      playerAAction,
-      playerBAction,
-      roundScore: roundScore(playerAAction, playerBAction),
-      total,
-    });
+
     return total + roundScore(playerAAction, playerBAction);
   }, 0);
 };
