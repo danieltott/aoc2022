@@ -1,11 +1,20 @@
 import run from "aocrunner";
 
-const parseInput = (rawInput: string) => rawInput;
+const parseInput = (rawInput: string) => rawInput.split("\n");
 
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
-  return;
+  return input.reduce((total, row) => {
+    const [aStart, aStop, bStart, bStop] = row.split(/[,-]/).map(Number);
+    if (aStart <= bStart && aStop >= bStop) {
+      return total + 1;
+    }
+    if (bStart <= aStart && bStop >= aStop) {
+      return total + 1;
+    }
+    return total;
+  }, 0);
 };
 
 const part2 = (rawInput: string) => {
