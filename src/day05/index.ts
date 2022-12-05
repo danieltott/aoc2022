@@ -7,10 +7,14 @@ const parseInput = (rawInput: string) => {
     .split("\n\n")
     .map((group) => group.split("\n")) as [string[], string[]];
 
+  // labels is the last row of the stacksRows
   const labels = stacksRows[stacksRows.length - 1]
     .split(/ (\d) /)
     .filter((a) => !!a.trim());
 
+  /**
+   * For each label,build up an array of the stacks
+   */
   const initialStacks = labels.reduce((stacksObj, label, index) => {
     return {
       ...stacksObj,
@@ -50,6 +54,7 @@ const part1 = (rawInput: string) => {
 const part2 = (rawInput: string) => {
   const [labels, initialStacks, steps] = parseInput(rawInput);
 
+  // literally exactly the same as above except without the `reverse()`
   const movedStacks = steps.reduce(
     (stacks, step) => {
       const [countStr, from, to] = step.substring(5).split(/ from | to /);
