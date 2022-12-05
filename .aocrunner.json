@@ -65,10 +65,10 @@
     },
     {
       "part1": {
-        "solved": false,
-        "result": null,
+        "solved": true,
+        "result": "QMBMJDFTD",
         "attempts": [],
-        "time": null
+        "time": 1.201333
       },
       "part2": {
         "solved": false,
