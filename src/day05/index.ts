@@ -3,9 +3,6 @@ import run from "aocrunner";
 type Stacks = Record<string, string[]>;
 
 const parseInput = (rawInput: string) => {
-  if (rawInput.indexOf("\n\n") === -1 || rawInput.indexOf("\n\n") === 0) {
-    throw new Error("invalid input");
-  }
   const [stacksRows, steps] = rawInput
     .split("\n\n")
     .map((group) => group.split("\n")) as [string[], string[]];
@@ -18,6 +15,7 @@ const parseInput = (rawInput: string) => {
     return {
       ...stacksObj,
       [label]: stacksRows
+        .slice(0, stacksRows.length - 1)
         .map((row) => {
           return row[index * 4 + 1].trim();
         })
@@ -132,5 +130,5 @@ move 1 from 1 to 2`,
     solution: part2,
   },
   trimTestInputs: false,
-  onlyTests: false,
+  onlyTests: true,
 });
