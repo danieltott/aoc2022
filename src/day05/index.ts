@@ -50,11 +50,24 @@ const part1 = (rawInput: string) => {
 };
 
 const part2 = (rawInput: string) => {
-  const input = parseInput(rawInput);
+  const [labels, initialStacks, steps] = parseInput(rawInput);
 
-  "[Z] [M] [P]".split(/\[([A-Z])\]/);
+  const movedStacks = steps.reduce(
+    (stacks, step) => {
+      const [countStr, from, to] = step.substring(5).split(/ from | to /);
+      const count = parseInt(countStr, 10);
+      const x = {
+        ...stacks,
+        [from]: stacks[from].slice(count),
+        [to]: [...stacks[from].slice(0, count), ...stacks[to]],
+      };
 
-  return;
+      return x;
+    },
+    { ...initialStacks } as Stacks,
+  );
+
+  return labels.map((label) => movedStacks[label][0]).join("");
 };
 
 run({
@@ -119,5 +132,5 @@ move 1 from 1 to 2`,
     solution: part2,
   },
   trimTestInputs: false,
-  onlyTests: true,
+  onlyTests: false,
 });
