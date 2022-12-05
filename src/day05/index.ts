@@ -1,5 +1,11 @@
 import run from "aocrunner";
 
+/**
+ * -----
+ * Input parser - is used in parts 1 and 2
+ * -----
+ */
+
 type Stacks = Record<string, string[]>;
 
 const parseInput = (rawInput: string) => {
@@ -30,6 +36,12 @@ const parseInput = (rawInput: string) => {
   return [labels, initialStacks, steps] as [string[], Stacks, string[]];
 };
 
+/**
+ * -----
+ * Part 2
+ * -----
+ */
+
 const part1 = (rawInput: string) => {
   const [labels, initialStacks, steps] = parseInput(rawInput);
 
@@ -50,6 +62,12 @@ const part1 = (rawInput: string) => {
 
   return labels.map((label) => movedStacks[label][0]).join("");
 };
+
+/**
+ * -----
+ * Part 2
+ * -----
+ */
 
 const part2 = (rawInput: string) => {
   const [labels, initialStacks, steps] = parseInput(rawInput);
@@ -72,6 +90,12 @@ const part2 = (rawInput: string) => {
 
   return labels.map((label) => movedStacks[label][0]).join("");
 };
+
+/**
+ * -----
+ * Runner
+ * -----
+ */
 
 run({
   part1: {
