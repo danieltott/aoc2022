@@ -8,6 +8,19 @@ import run from "aocrunner";
 
 const parseInput = (rawInput: string) => rawInput.split("");
 
+function findCode(input: string[], codeLength: number) {
+  let i = 0;
+  let found;
+  while (!found) {
+    if (new Set(input.slice(i, i + codeLength)).size === codeLength) {
+      found = i;
+    }
+    i++;
+  }
+
+  return found + codeLength;
+}
+
 /**
  * -----
  * Part 1
@@ -17,16 +30,7 @@ const parseInput = (rawInput: string) => rawInput.split("");
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
-  let i = 0;
-  let found;
-  while (!found) {
-    if (new Set(input.slice(i, i + 4)).size === 4) {
-      found = i;
-    }
-    i++;
-  }
-
-  return found + 4;
+  return findCode(input, 4);
 };
 
 /**
@@ -38,7 +42,7 @@ const part1 = (rawInput: string) => {
 const part2 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
-  return;
+  return findCode(input, 14);
 };
 
 /**
