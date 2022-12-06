@@ -6,7 +6,7 @@ import run from "aocrunner";
  * -----
  */
 
-const parseInput = (rawInput: string) => rawInput;
+const parseInput = (rawInput: string) => rawInput.split("");
 
 /**
  * -----
@@ -15,7 +15,7 @@ const parseInput = (rawInput: string) => rawInput;
  */
 
 const part1 = (rawInput: string) => {
-  const input = parseInput(rawInput).split("");
+  const input = parseInput(rawInput);
 
   let i = 0;
   let found;
