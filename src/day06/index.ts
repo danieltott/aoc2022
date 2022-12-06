@@ -15,9 +15,18 @@ const parseInput = (rawInput: string) => rawInput;
  */
 
 const part1 = (rawInput: string) => {
-  const input = parseInput(rawInput);
+  const input = parseInput(rawInput).split("");
 
-  return;
+  let i = 0;
+  let found;
+  while (!found) {
+    if (new Set(input.slice(i, i + 4)).size === 4) {
+      found = i;
+    }
+    i++;
+  }
+
+  return found + 4;
 };
 
 /**
@@ -41,10 +50,26 @@ const part2 = (rawInput: string) => {
 run({
   part1: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `mjqjpqmgbljsphdztnvjfqwrcgsmlb`,
+        expected: 7,
+      },
+      {
+        input: `bvwbjplbgvbhsrlpgdmjqwftvncz`,
+        expected: 5,
+      },
+      {
+        input: `nppdvjthqldpwncqszvftbrmjlhg`,
+        expected: 6,
+      },
+      {
+        input: `nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg`,
+        expected: 10,
+      },
+      {
+        input: `zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw`,
+        expected: 11,
+      },
     ],
     solution: part1,
   },
@@ -58,5 +83,5 @@ run({
     solution: part2,
   },
   trimTestInputs: true,
-  onlyTests: true,
+  onlyTests: false,
 });
