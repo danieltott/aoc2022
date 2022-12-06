@@ -75,10 +75,26 @@ run({
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `mjqjpqmgbljsphdztnvjfqwrcgsmlb`,
+        expected: 19,
+      },
+      {
+        input: `bvwbjplbgvbhsrlpgdmjqwftvncz`,
+        expected: 23,
+      },
+      {
+        input: `nppdvjthqldpwncqszvftbrmjlhg`,
+        expected: 23,
+      },
+      {
+        input: `nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg`,
+        expected: 29,
+      },
+      {
+        input: `zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw`,
+        expected: 26,
+      },
     ],
     solution: part2,
   },
