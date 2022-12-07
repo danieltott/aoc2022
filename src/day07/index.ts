@@ -8,15 +8,7 @@ import run from "aocrunner";
 
 const parseInput = (rawInput: string) => rawInput;
 
-/**
- * -----
- * Part 1
- * -----
- */
-
-const part1 = (rawInput: string) => {
-  const input = parseInput(rawInput);
-
+function getCounts(input: string) {
   const directories: string[] = [];
   const counts: Record<string, number> = {};
 
@@ -50,6 +42,20 @@ const part1 = (rawInput: string) => {
         }
       }
     });
+  return counts;
+}
+
+/**
+ * -----
+ * Part 1
+ * -----
+ */
+
+const part1 = (rawInput: string) => {
+  // 1297683
+  const input = parseInput(rawInput);
+
+  const counts = getCounts(input);
 
   return Object.keys(counts).reduce(
     (total, key) => total + (counts[key] > 100000 ? 0 : counts[key]),
