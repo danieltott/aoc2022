@@ -99,13 +99,15 @@
           "947159",
           "997595"
         ],
-        "time": 1.8925
+        "time": 1.462417
       },
       "part2": {
         "solved": false,
-        "result": null,
-        "attempts": [],
-        "time": null
+        "result": "9427614",
+        "attempts": [
+          "9427614"
+        ],
+        "time": 1.375584
       }
     },
     {

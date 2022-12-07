@@ -72,7 +72,16 @@ const part1 = (rawInput: string) => {
 const part2 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
-  return;
+  const counts = getCounts(input);
+
+  return Object.keys(counts).reduce((answer, key) => {
+    const count = counts[key];
+
+    if (count >= 8381165 && count < answer) {
+      return count;
+    }
+    return answer;
+  }, Number.MAX_SAFE_INTEGER);
 };
 
 /**
@@ -145,5 +154,5 @@ $ ls
     solution: part2,
   },
   trimTestInputs: true,
-  onlyTests: true,
+  onlyTests: false,
 });
