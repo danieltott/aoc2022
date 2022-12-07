@@ -14,10 +14,70 @@ const parseInput = (rawInput: string) => rawInput;
  * -----
  */
 
+type Directory = Record<string, { count: number; parent: string }>;
+
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput);
+  let level = -1;
+  let curDirectory: string = "";
+  const directories: Directory[] = [];
 
-  return;
+  input
+    .split(/\$ cd (.*)\n|\$ ls\n/)
+    .filter(Boolean)
+    .forEach((line) => {
+      console.log("---");
+      console.log(line.trim());
+      console.log("---");
+      console.log(level, curDirectory);
+      console.log("---");
+      if (line.match(/\n/)) {
+        const count = line
+          .trim()
+          .split("\n")
+          .reduce((total, line) => {
+            if (line.startsWith("dir ")) {
+              return total;
+            } else {
+              const [size] = line.split(" ");
+              return total + parseInt(size, 10);
+            }
+          }, 0);
+
+        let totalDirectory = curDirectory;
+
+        for (let i = level; i > -1; i--) {
+          // console.log(totalDirectory, i);
+          directories[i][totalDirectory].count += count;
+          totalDirectory = directories[i][totalDirectory].parent;
+        }
+      } else {
+        if (line === "..") {
+          curDirectory = directories[level][curDirectory].parent;
+          level--;
+        } else {
+          level++;
+          if (directories[level] === undefined) {
+            directories[level] = {};
+          }
+          directories[level][line] = { count: 0, parent: curDirectory };
+          curDirectory = line;
+        }
+      }
+    });
+
+  console.log(directories);
+
+  return directories.reduce((total, directory) => {
+    return (
+      total +
+      Object.keys(directory).reduce((dirTotal, key) => {
+        return (
+          dirTotal + (directory[key].count >= 100000 ? 0 : directory[key].count)
+        );
+      }, 0)
+    );
+  }, 0);
 };
 
 /**
