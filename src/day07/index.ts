@@ -31,6 +31,7 @@ function getCounts(input: string) {
 
         for (let i = 0; i < directories.length; i++) {
           const key = directories.slice(0, i + 1).join("-");
+
           counts[key] += count;
         }
       } else {
@@ -42,6 +43,7 @@ function getCounts(input: string) {
         }
       }
     });
+
   return counts;
 }
 
@@ -73,11 +75,12 @@ const part2 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
   const counts = getCounts(input);
+  const spaceNeeded = 30000000 - (70000000 - counts["/"]);
 
   return Object.keys(counts).reduce((answer, key) => {
     const count = counts[key];
 
-    if (count >= 8381165 && count < answer) {
+    if (count >= spaceNeeded && count < answer) {
       return count;
     }
     return answer;
