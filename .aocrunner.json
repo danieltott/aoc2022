@@ -94,9 +94,11 @@
     {
       "part1": {
         "solved": false,
-        "result": "947159",
-        "attempts": [],
-        "time": 132.323625
+        "result": "997595",
+        "attempts": [
+          "947159"
+        ],
+        "time": 10.13625
       },
       "part2": {
         "solved": false,

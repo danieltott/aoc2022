@@ -26,12 +26,7 @@ const part1 = (rawInput: string) => {
     .split(/\$ cd (.*)\n|\$ ls\n/)
     .filter(Boolean)
     .forEach((line) => {
-      console.log("---");
-      console.log(line.trim());
-      console.log("---");
-      console.log(level, curDirectory);
-      console.log("---");
-      if (line.match(/\n/)) {
+      if (line.match(/^dir .*|^[0-9]+ /)) {
         const count = line
           .trim()
           .split("\n")
@@ -47,7 +42,6 @@ const part1 = (rawInput: string) => {
         let totalDirectory = curDirectory;
 
         for (let i = level; i > -1; i--) {
-          // console.log(totalDirectory, i);
           directories[i][totalDirectory].count += count;
           totalDirectory = directories[i][totalDirectory].parent;
         }
@@ -140,5 +134,5 @@ $ ls
     solution: part2,
   },
   trimTestInputs: true,
-  onlyTests: true,
+  onlyTests: false,
 });
