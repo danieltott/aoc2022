@@ -19,16 +19,16 @@ const part1 = (rawInput: string) => {
   const input = parseInput(rawInput);
   let visibleTrees = 0;
 
-  for (let i = 0; i < input.length; i++) {
-    let currentTallestInRow = input[i][0];
+  for (let row = 0; row < input.length; row++) {
+    let currentTallestInRow = input[row][0];
 
-    for (let j = 0; j < input[i].length; j++) {
-      const treeHeight = input[i][j];
+    for (let column = 0; column < input[row].length; column++) {
+      const treeHeight = input[row][column];
       if (
-        i === 0 ||
-        i === input.length - 1 ||
-        j === 0 ||
-        j === input[i].length - 1
+        row === 0 ||
+        row === input.length - 1 ||
+        column === 0 ||
+        column === input[row].length - 1
       ) {
         // tree is on the edge
 
@@ -41,8 +41,8 @@ const part1 = (rawInput: string) => {
         } else {
           // loop up
           let visibleToTheTop = true;
-          for (let k = i - 1; k >= 0; k--) {
-            if (treeHeight <= input[k][j]) {
+          for (let k = row - 1; k >= 0; k--) {
+            if (treeHeight <= input[k][column]) {
               visibleToTheTop = false;
               break;
             }
@@ -53,8 +53,8 @@ const part1 = (rawInput: string) => {
           }
           // look to the right
           let visibleToTheRight = true;
-          for (let k = j + 1; k < input[i].length; k++) {
-            if (treeHeight <= input[i][k]) {
+          for (let k = column + 1; k < input[row].length; k++) {
+            if (treeHeight <= input[row][k]) {
               visibleToTheRight = false;
               break;
             }
@@ -66,8 +66,8 @@ const part1 = (rawInput: string) => {
 
           let visibleToTheBottom = true;
           // look down
-          for (let k = i + 1; k < input.length; k++) {
-            if (treeHeight <= input[k][j]) {
+          for (let k = row + 1; k < input.length; k++) {
+            if (treeHeight <= input[k][column]) {
               visibleToTheBottom = false;
               break;
             }
