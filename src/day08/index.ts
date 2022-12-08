@@ -31,12 +31,10 @@ const part1 = (rawInput: string) => {
         column === input[row].length - 1
       ) {
         // tree is on the edge
-
         visibleTrees++;
       } else {
         if (treeHeight > currentTallestInRow) {
           currentTallestInRow = treeHeight;
-
           visibleTrees++;
         } else {
           // loop up
@@ -64,8 +62,8 @@ const part1 = (rawInput: string) => {
             continue;
           }
 
-          let visibleToTheBottom = true;
           // look down
+          let visibleToTheBottom = true;
           for (let k = row + 1; k < input.length; k++) {
             if (treeHeight <= input[k][column]) {
               visibleToTheBottom = false;
