@@ -18,10 +18,13 @@ const parseInput = (rawInput: string) =>
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput);
   let visibleTrees = 0;
-  let currentTallestInRow = 0;
-  let currentTallestInColumn = 0;
+  console.log(input);
+
   for (let i = 0; i < input.length; i++) {
+    let currentTallestInRow = input[i][0];
+    console.log(input[i].length);
     for (let j = 0; j < input[i].length; j++) {
+      console.log(i, j, "*");
       const treeHeight = input[i][j];
       if (
         i === 0 ||
@@ -30,18 +33,27 @@ const part1 = (rawInput: string) => {
         j === input[i].length - 1
       ) {
         // tree is on the edge
-        console.log(i, j, treeHeight, true, "edge");
+        console.log(i, j, treeHeight, "edge");
         visibleTrees++;
       } else {
         if (treeHeight > currentTallestInRow) {
           currentTallestInRow = treeHeight;
-          console.log(i, j, treeHeight, true, "left");
-          visibleTrees++;
-        } else if (treeHeight > currentTallestInColumn) {
-          currentTallestInColumn = treeHeight;
-          console.log(i, j, treeHeight, true, "top");
+          console.log(i, j, treeHeight, "left");
           visibleTrees++;
         } else {
+          // loop up
+          let visibleToTheTop = true;
+          for (let k = i - 1; k >= 0; k--) {
+            if (treeHeight <= input[k][j]) {
+              visibleToTheTop = false;
+              break;
+            }
+          }
+          if (visibleToTheTop) {
+            console.log(i, j, treeHeight, "up");
+            visibleTrees++;
+            continue;
+          }
           // look to the right
           let visibleToTheRight = true;
           for (let k = j + 1; k < input[i].length; k++) {
@@ -51,24 +63,26 @@ const part1 = (rawInput: string) => {
             }
           }
           if (visibleToTheRight) {
-            console.log(i, j, treeHeight, true, "right");
+            console.log(i, j, treeHeight, "right");
             visibleTrees++;
-          } else {
-            let visibleToTheBottom = true;
-            // look down
-            for (let k = i + 1; k < input.length; k++) {
-              if (treeHeight <= input[k][j]) {
-                visibleToTheBottom = false;
-                break;
-              }
-            }
-            if (visibleToTheBottom) {
-              console.log(i, j, treeHeight, true, "bottom");
-              visibleTrees++;
-            } else {
-              console.log(i, j, treeHeight, false);
+            continue;
+          }
+
+          let visibleToTheBottom = true;
+          // look down
+          for (let k = i + 1; k < input.length; k++) {
+            if (treeHeight <= input[k][j]) {
+              visibleToTheBottom = false;
+              break;
             }
           }
+          if (visibleToTheBottom) {
+            console.log(i, j, treeHeight, "down");
+            visibleTrees++;
+            continue;
+          }
+
+          console.log(i, j, treeHeight, "hidden");
         }
       }
     }
@@ -121,5 +135,5 @@ run({
     solution: part2,
   },
   trimTestInputs: true,
-  onlyTests: true,
+  onlyTests: false,
 });
