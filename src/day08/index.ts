@@ -91,7 +91,65 @@ const part1 = (rawInput: string) => {
 const part2 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
-  return;
+  let bestViewScore = 0;
+
+  for (let row = 0; row < input.length; row++) {
+    for (let column = 0; column < input[row].length; column++) {
+      const treeHeight = input[row][column];
+      if (
+        row === 0 ||
+        row === input.length - 1 ||
+        column === 0 ||
+        column === input[row].length - 1
+      ) {
+        // tree is on the edge
+        continue;
+      } else {
+        // loop left
+        let leftSteps = 0;
+        for (let k = column - 1; k >= 0; k--) {
+          leftSteps++;
+          if (treeHeight <= input[row][k]) {
+            break;
+          }
+        }
+
+        // loop up
+        let upSteps = 0;
+        for (let k = row - 1; k >= 0; k--) {
+          upSteps++;
+          if (treeHeight <= input[k][column]) {
+            break;
+          }
+        }
+
+        // look to the right
+        let rightSteps = 0;
+        for (let k = column + 1; k < input[row].length; k++) {
+          rightSteps++;
+          if (treeHeight <= input[row][k]) {
+            break;
+          }
+        }
+
+        // look down
+        let downSteps = 0;
+        for (let k = row + 1; k < input.length; k++) {
+          downSteps++;
+          if (treeHeight <= input[k][column]) {
+            break;
+          }
+        }
+
+        const viewScore = leftSteps * upSteps * rightSteps * downSteps;
+        if (viewScore > bestViewScore) {
+          bestViewScore = viewScore;
+        }
+      }
+    }
+  }
+
+  return bestViewScore;
 };
 
 /**
@@ -118,10 +176,14 @@ run({
   },
   part2: {
     tests: [
-      // {
-      //   input: ``,
-      //   expected: "",
-      // },
+      {
+        input: `30373
+25512
+65332
+33549
+35390`,
+        expected: 8,
+      },
     ],
     solution: part2,
   },
