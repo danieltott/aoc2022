@@ -18,13 +18,11 @@ const parseInput = (rawInput: string) =>
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput);
   let visibleTrees = 0;
-  console.log(input);
 
   for (let i = 0; i < input.length; i++) {
     let currentTallestInRow = input[i][0];
-    console.log(input[i].length);
+
     for (let j = 0; j < input[i].length; j++) {
-      console.log(i, j, "*");
       const treeHeight = input[i][j];
       if (
         i === 0 ||
@@ -33,12 +31,12 @@ const part1 = (rawInput: string) => {
         j === input[i].length - 1
       ) {
         // tree is on the edge
-        console.log(i, j, treeHeight, "edge");
+
         visibleTrees++;
       } else {
         if (treeHeight > currentTallestInRow) {
           currentTallestInRow = treeHeight;
-          console.log(i, j, treeHeight, "left");
+
           visibleTrees++;
         } else {
           // loop up
@@ -50,7 +48,6 @@ const part1 = (rawInput: string) => {
             }
           }
           if (visibleToTheTop) {
-            console.log(i, j, treeHeight, "up");
             visibleTrees++;
             continue;
           }
@@ -63,7 +60,6 @@ const part1 = (rawInput: string) => {
             }
           }
           if (visibleToTheRight) {
-            console.log(i, j, treeHeight, "right");
             visibleTrees++;
             continue;
           }
@@ -77,12 +73,9 @@ const part1 = (rawInput: string) => {
             }
           }
           if (visibleToTheBottom) {
-            console.log(i, j, treeHeight, "down");
             visibleTrees++;
             continue;
           }
-
-          console.log(i, j, treeHeight, "hidden");
         }
       }
     }
