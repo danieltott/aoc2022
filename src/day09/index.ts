@@ -26,7 +26,6 @@ function doTheRopeThing(
     const [affectedColumn, direction, distance] = input[i];
     // console.log(input[i]);
     for (let j = 0; j < distance; j++) {
-      const otherColumn = affectedColumn ? 0 : 1;
       // move the head
       rope[0][affectedColumn] += direction;
 
@@ -34,18 +33,34 @@ function doTheRopeThing(
         const currentKnot = rope[j];
         const previousKnot = rope[j - 1];
 
+        const diffX = previousKnot[0] - currentKnot[0];
+        const absX = Math.abs(diffX);
+        const signX = Math.sign(diffX);
+        const diffY = previousKnot[1] - currentKnot[1];
+        const absY = Math.abs(diffY);
+        const signY = Math.sign(diffY);
+
+        /**
+         * if the head and tail aren't touching and aren't in the same row or column,
+         * the tail always moves one step diagonally to keep up:
+         */
         if (
-          (Math.abs(previousKnot[0] - currentKnot[0]) > 1 &&
-            previousKnot[1] !== currentKnot[1]) ||
-          (Math.abs(previousKnot[1] - currentKnot[1]) > 1 &&
-            previousKnot[0] !== currentKnot[0])
+          (absX > 1 && previousKnot[1] !== currentKnot[1]) ||
+          (absY > 1 && previousKnot[0] !== currentKnot[0])
         ) {
-          currentKnot[0] += Math.sign(previousKnot[0] - currentKnot[0]);
-          currentKnot[1] += Math.sign(previousKnot[1] - currentKnot[1]);
-        } else if (Math.abs(previousKnot[0] - currentKnot[0]) > 1) {
-          currentKnot[0] += Math.sign(previousKnot[0] - currentKnot[0]);
-        } else if (Math.abs(previousKnot[1] - currentKnot[1]) > 1) {
-          currentKnot[1] += Math.sign(previousKnot[1] - currentKnot[1]);
+          currentKnot[0] += signX;
+          currentKnot[1] += signY;
+        } else {
+          /**
+           * If the head is ever two steps directly up, down, left,
+           * or right from the tail, the tail must also move one step
+           * in that direction so it remains close enough:
+           */
+          if (absX > 1) {
+            currentKnot[0] += signX;
+          } else if (absY > 1) {
+            currentKnot[1] += signY;
+          }
         }
       }
 
