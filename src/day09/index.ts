@@ -35,17 +35,17 @@ function doTheRopeThing(
         const previousKnot = rope[j - 1];
 
         if (
-          Math.abs(previousKnot[affectedColumn] - currentKnot[affectedColumn]) >
-          1
+          (Math.abs(previousKnot[0] - currentKnot[0]) > 1 &&
+            previousKnot[1] !== currentKnot[1]) ||
+          (Math.abs(previousKnot[1] - currentKnot[1]) > 1 &&
+            previousKnot[0] !== currentKnot[0])
         ) {
-          currentKnot[affectedColumn] += Math.sign(
-            previousKnot[affectedColumn] - currentKnot[affectedColumn],
-          );
-          if (currentKnot[otherColumn] !== previousKnot[otherColumn]) {
-            currentKnot[otherColumn] += Math.sign(
-              previousKnot[otherColumn] - currentKnot[otherColumn],
-            );
-          }
+          currentKnot[0] += Math.sign(previousKnot[0] - currentKnot[0]);
+          currentKnot[1] += Math.sign(previousKnot[1] - currentKnot[1]);
+        } else if (Math.abs(previousKnot[0] - currentKnot[0]) > 1) {
+          currentKnot[0] += Math.sign(previousKnot[0] - currentKnot[0]);
+        } else if (Math.abs(previousKnot[1] - currentKnot[1]) > 1) {
+          currentKnot[1] += Math.sign(previousKnot[1] - currentKnot[1]);
         }
       }
 
@@ -139,5 +139,5 @@ U 20`,
     solution: part2,
   },
   trimTestInputs: true,
-  onlyTests: false,
+  onlyTests: true,
 });
