@@ -17,9 +17,10 @@ const parseInput = (rawInput: string) =>
 
 function doTheRopeThing(
   input: ReturnType<typeof parseInput>,
-  rope: number[][],
+  ropeLength: number,
 ) {
-  const visited = new Set([rope[rope.length - 1].join("-")]);
+  const visited = new Set(["0-0"]);
+  const rope = Array.from({ length: ropeLength }, () => [0, 0]);
 
   for (let i = 0; i < input.length; i++) {
     const [affectedColumn, direction, distance] = input[i];
@@ -75,13 +76,8 @@ function doTheRopeThing(
 
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput);
-  // console.log(input);
-  const rope = [
-    [0, 0],
-    [0, 0],
-  ];
 
-  const visited = doTheRopeThing(input, rope);
+  const visited = doTheRopeThing(input, 2);
 
   return visited.size;
 };
