@@ -24,7 +24,7 @@ function doTheRopeThing(
 
   for (let i = 0; i < input.length; i++) {
     const [affectedColumn, direction, distance] = input[i];
-
+    // console.log(input[i]);
     for (let j = 0; j < distance; j++) {
       const otherColumn = affectedColumn ? 0 : 1;
       // move the head
@@ -34,7 +34,6 @@ function doTheRopeThing(
         const currentKnot = rope[j];
         const previousKnot = rope[j - 1];
 
-        // if that moved it too far that direction, move the tail in the same direction
         if (
           Math.abs(previousKnot[affectedColumn] - currentKnot[affectedColumn]) >
           1
@@ -42,25 +41,15 @@ function doTheRopeThing(
           currentKnot[affectedColumn] += Math.sign(
             previousKnot[affectedColumn] - currentKnot[affectedColumn],
           );
-
-          // if the tail is now diagonal to the head, move the tail into the same column as the head
-          if (
-            previousKnot[0] !== currentKnot[0] &&
-            previousKnot[1] !== currentKnot[1]
-          ) {
+          if (currentKnot[otherColumn] !== previousKnot[otherColumn]) {
             currentKnot[otherColumn] += Math.sign(
               previousKnot[otherColumn] - currentKnot[otherColumn],
             );
           }
-        } else if (
-          Math.abs(previousKnot[otherColumn] - currentKnot[otherColumn]) > 1
-        ) {
-          // if we had previously moved to far away the last time, move the tail that direction
-          currentKnot[otherColumn] += Math.sign(
-            previousKnot[otherColumn] - currentKnot[otherColumn],
-          );
         }
       }
+
+      // console.log(rope);
 
       visited.add(rope[rope.length - 1].join("-"));
     }
@@ -91,7 +80,9 @@ const part1 = (rawInput: string) => {
 const part2 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
-  return;
+  const visited = doTheRopeThing(input, 10);
+
+  return visited.size;
 };
 
 /**
