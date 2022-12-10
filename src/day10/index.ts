@@ -6,7 +6,7 @@ import run from "aocrunner";
  * -----
  */
 
-const parseInput = (rawInput: string) => rawInput;
+const parseInput = (rawInput: string) => rawInput.split("\n");
 
 /**
  * -----
@@ -14,10 +14,67 @@ const parseInput = (rawInput: string) => rawInput;
  * -----
  */
 
+const isInteresting = (x: number) => {
+  return (x - 20) % 40 === 0;
+};
+
 const part1 = (rawInput: string) => {
   const input = parseInput(rawInput);
 
-  return;
+  return input.reduce(
+    (acc, line) => {
+      const updated = {
+        ...acc,
+        cycle: acc.cycle + 1,
+      };
+
+      if (line === "noop") {
+        if (isInteresting(updated.cycle)) {
+          console.log({
+            s: 1,
+            cycle: updated.cycle,
+            x: updated.x,
+            interestingValue: updated.cycle * updated.x,
+          });
+          updated.interestingSum += updated.cycle * updated.x;
+        }
+        return updated;
+      }
+
+      const value = parseInt(line.slice(4));
+
+      if (isInteresting(updated.cycle)) {
+        console.log({
+          s: 2,
+          cycle: updated.cycle,
+          x: updated.x,
+          interestingValue: updated.cycle * updated.x,
+        });
+        updated.interestingSum += updated.cycle * updated.x;
+      }
+
+      updated.cycle += 1;
+
+      if (isInteresting(updated.cycle)) {
+        console.log({
+          s: 3,
+          cycle: updated.cycle,
+          x: updated.x,
+          interestingValue: updated.cycle * updated.x,
+        });
+        updated.interestingSum += updated.cycle * updated.x;
+      }
+
+      updated.x += value;
+
+      return updated;
+    },
+    {
+      x: 1,
+      cycle: 0,
+      interestingSum: 0,
+    },
+  ).interestingSum;
 };
 
 /**
